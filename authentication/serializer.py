@@ -1,4 +1,10 @@
-from rest_framework.serializers import ModelSerializer, CharField, TimeField, DateField
+from rest_framework.serializers import (
+    ModelSerializer,
+    CharField,
+    TimeField,
+    DateField,
+    ReadOnlyField,
+)
 from .models import DiveUser
 from rest_framework.validators import ValidationError
 from rest_framework.authtoken.models import Token
@@ -6,6 +12,7 @@ from django.utils import timezone
 
 
 class RegisterSerializer(ModelSerializer):
+    id = ReadOnlyField()
     email = CharField(max_length=100)
     username = CharField(max_length=45)
     password = CharField(min_length=8, write_only=True)
@@ -16,8 +23,17 @@ class RegisterSerializer(ModelSerializer):
 
     class Meta:
         model = DiveUser
-        fields = ["username", "email", "password", "registration_date",
-                  "registration_time", "first_name", "last_name", "role"]
+        fields = [
+            "id",
+            "username",
+            "email",
+            "password",
+            "registration_date",
+            "registration_time",
+            "first_name",
+            "last_name",
+            "role",
+        ]
 
     def validate(self, attrs):
         email_exists = DiveUser.objects.filter(email=attrs["email"])
@@ -36,6 +52,7 @@ class RegisterSerializer(ModelSerializer):
 
 
 class LoginSerializer(ModelSerializer):
+    id = ReadOnlyField()
     email = CharField(max_length=100)
     first_name = CharField(read_only=True)
     last_name = CharField(read_only=True)
@@ -45,7 +62,16 @@ class LoginSerializer(ModelSerializer):
 
     class Meta:
         model = DiveUser
-        fields = ["email", "password", "first_name", "last_name", "role", "registration_date", "registration_time"]
+        fields = [
+            "id",
+            "email",
+            "password",
+            "first_name",
+            "last_name",
+            "role",
+            "registration_date",
+            "registration_time",
+        ]
 
     def validate(self, attrs):
         email_exists = DiveUser.objects.filter(email=attrs["email"])

@@ -1,4 +1,9 @@
-from rest_framework.serializers import ModelSerializer, IntegerField, CharField, TimeField
+from rest_framework.serializers import (
+    ModelSerializer,
+    IntegerField,
+    CharField,
+    TimeField,
+)
 from authentication.models import DiveUser
 
 
