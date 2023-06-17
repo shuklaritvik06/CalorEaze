@@ -35,8 +35,7 @@ class LoginSerializer(ModelSerializer):
 
     class Meta:
         model = DiveUser
-        fields = ["username", "email", "registration_date",
-                  "registration_time", "first_name", "last_name", "role"]
+        fields = ["email", "role", "first_name", "last_name"]
 
     def validate(self, attrs):
         email_exists = DiveUser.objects.filter(email=attrs["email"])
