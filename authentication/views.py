@@ -13,13 +13,6 @@ class RegisterView(GenericAPIView):
     serializer_class = RegisterSerializer
     permission_classes = []
 
-    def get(self, request):
-        return JsonResponse({
-            "status": "success",
-            "code": 200,
-            "message": "Please use POST method to register a user",
-        })
-
     def post(self, request):
         serialized_data = self.serializer_class(data=request.data)
         data = serialized_data.initial_data
@@ -43,24 +36,25 @@ class LoginView(GenericAPIView):
     serializer_class = LoginSerializer
     permission_classes = []
 
-    def get(self, request):
-        return JsonResponse({
-            "status": "success",
-            "code": 200,
-            "message": "Please use POST method to login a user",
-        })
-
     def post(self, request):
         email = request.data.get("email")
         password = request.data.get("password")
         user = authenticate(email=email, password=password)
         if user is not None:
             tokens = create_jwt_pair_for_user(user=user)
+            user_data = LoginSerializer(user).data
             return JsonResponse({
                 "status": "success",
                 "message": "Login successful",
                 "data": {
-                    "user": LoginSerializer(user).data,
+                    "user": {
+                        "email": user_data.get("email"),
+                        "first_name": user_data.get("first_name"),
+                        "last_name": user_data.get("last_name"),
+                        "role": user_data.get("role"),
+                        "registration_date": user_data.get("registration_date"),
+                        "registration_time": user_data.get("registration_time")
+                    },
                     "auth_token": tokens
                 }
             }, status=status.HTTP_200_OK)

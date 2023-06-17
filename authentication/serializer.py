@@ -2,14 +2,14 @@ from rest_framework.serializers import ModelSerializer, CharField, TimeField, Da
 from .models import DiveUser
 from rest_framework.validators import ValidationError
 from rest_framework.authtoken.models import Token
-from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
 
 class RegisterSerializer(ModelSerializer):
     email = CharField(max_length=100)
     username = CharField(max_length=45)
     password = CharField(min_length=8, write_only=True)
-    registration_time = TimeField()
+    registration_time = TimeField(read_only=True)
+    role = CharField(read_only=True)
 
     class Meta:
         model = DiveUser
@@ -33,10 +33,15 @@ class RegisterSerializer(ModelSerializer):
 
 class LoginSerializer(ModelSerializer):
     email = CharField(max_length=100)
+    first_name = CharField(read_only=True)
+    last_name = CharField(read_only=True)
+    role = CharField(read_only=True)
+    registration_date = DateField(read_only=True)
+    registration_time = TimeField(read_only=True)
 
     class Meta:
         model = DiveUser
-        fields = ["email"]
+        fields = ["email", "password", "first_name", "last_name", "role", "registration_date", "registration_time"]
 
     def validate(self, attrs):
         email_exists = DiveUser.objects.filter(email=attrs["email"])
