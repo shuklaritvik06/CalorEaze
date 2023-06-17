@@ -6,5 +6,7 @@ User = get_user_model()
 
 def create_jwt_pair_for_user(user: User):
     refresh = RefreshToken.for_user(user)
+    refresh["email"] = user.email
+    refresh["role"] = user.role
     tokens = {"access": str(refresh.access_token), "refresh": str(refresh)}
     return tokens

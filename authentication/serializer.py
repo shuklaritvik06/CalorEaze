@@ -2,6 +2,7 @@ from rest_framework.serializers import ModelSerializer, CharField, TimeField, Da
 from .models import DiveUser
 from rest_framework.validators import ValidationError
 from rest_framework.authtoken.models import Token
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
 
 class RegisterSerializer(ModelSerializer):
@@ -35,11 +36,10 @@ class LoginSerializer(ModelSerializer):
 
     class Meta:
         model = DiveUser
-        fields = ["email", "role", "first_name", "last_name"]
+        fields = ["email"]
 
     def validate(self, attrs):
         email_exists = DiveUser.objects.filter(email=attrs["email"])
         if email_exists is None:
             raise ValidationError("Email does not exist")
         return super().validate(attrs)
-

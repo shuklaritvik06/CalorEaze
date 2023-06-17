@@ -6,6 +6,7 @@ from .token import create_jwt_pair_for_user
 from rest_framework import status
 from pytz import timezone
 from datetime import datetime
+from .models import DiveUser
 
 
 class RegisterView(GenericAPIView):
@@ -68,3 +69,25 @@ class LoginView(GenericAPIView):
             "status": "error",
             "message": "Invalid credentials"
         }, status=status.HTTP_400_BAD_REQUEST)
+
+
+class LogoutUser(GenericAPIView):
+    def post(self, request):
+        email = request.data.get("email")
+        if email is None:
+            return JsonResponse(
+                {"error": "Please provide email"},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+        try:
+            user = DiveUser.objects.get(email=email)
+            user.auth_token.delete()
+            return JsonResponse(
+                {"status": "success", "message": f"User {user.email} logged out successfully"},
+                status=status.HTTP_200_OK,
+            )
+        except DiveUser.DoesNotExist:
+            return JsonResponse(
+                {"status": "error", "message": "User does not exist"},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
