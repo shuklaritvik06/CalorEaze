@@ -1,2 +1,3 @@
 venv/
 .env
+calories_api.sqlite3
