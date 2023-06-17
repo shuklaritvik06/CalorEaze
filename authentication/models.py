@@ -30,7 +30,7 @@ class DiveUser(AbstractUser):
     role = models.CharField(max_length=100, choices=(('REGULAR', 'REGULAR'),
                                                      ('MANAGER', 'MANAGER'), ('ADMIN', 'ADMIN')), default="REGULAR")
     registration_date = models.DateField(auto_now=True)
-    registration_time = models.TimeField(auto_created=True)
+    registration_time = models.TimeField(blank=True)
 
     objects = DiveUserManager()
 
