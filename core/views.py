@@ -1,3 +1,9 @@
-from django.shortcuts import render
+from rest_framework.generics import GenericAPIView
 
-# Create your views here.
+
+class CalorieAPIView(GenericAPIView):
+    pass
+
+
+class FilterView(GenericAPIView):
+    pass
