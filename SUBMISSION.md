@@ -172,3 +172,15 @@ Run Tests
 ```markdown
 python3 manage.py test --settings "api.settings.local"
 ```
+
+**Docker Way**
+
+- Pull the image from docker hub
+
+```commandline
+docker push ritvikshukla/caloriesapi:latest
+```
+
+```commandline
+docker run -p 8000:8000 -d ritvikshukla/caloriesapi
+```
