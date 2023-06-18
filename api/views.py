@@ -6,7 +6,7 @@ from django.shortcuts import render
 
 
 def home_view(request):
-    return render(request, "index.html")
+    return render(request, "index.html", {"status": "UP"})
 
 @swagger_auto_schema(
     methods=['get'],
