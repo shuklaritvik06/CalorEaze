@@ -4,19 +4,20 @@ from django.http import JsonResponse
 from django.contrib.auth import authenticate
 from .token import create_jwt_pair_for_user
 from rest_framework import status
-from pytz import timezone
-from datetime import datetime
 from .models import DiveUser
+from drf_yasg.utils import swagger_auto_schema
 
 
 class RegisterView(GenericAPIView):
     serializer_class = RegisterSerializer
     permission_classes = []
 
+    @swagger_auto_schema(
+        tags=['authentication'],
+        operation_summary='Register a user',
+    )
     def post(self, request):
         serialized_data = self.serializer_class(data=request.data)
-        data = serialized_data.initial_data
-        data["registration_time"] = datetime.now(timezone("Asia/Kolkata")).strftime("%H:%M:%S")
         if serialized_data.is_valid():
             serialized_data.save()
             return JsonResponse({
@@ -36,6 +37,10 @@ class LoginView(GenericAPIView):
     serializer_class = LoginSerializer
     permission_classes = []
 
+    @swagger_auto_schema(
+        tags=['authentication'],
+        operation_summary='Login a user',
+    )
     def post(self, request):
         email = request.data.get("email")
         password = request.data.get("password")

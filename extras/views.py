@@ -3,11 +3,11 @@ from .models import ExpectedCalories
 from .serializer import ExpectedSerializer
 from django.http import JsonResponse
 from rest_framework import status
-from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
+from rest_framework.views import APIView
+from django.utils import timezone
 
-
-class CaloriesView(GenericAPIView):
+class CreateView(GenericAPIView):
     serializer_class = ExpectedSerializer
     permission_classes = []
 
@@ -31,6 +31,36 @@ class CaloriesView(GenericAPIView):
             "errors": serialized_data.errors
         }, status=status.HTTP_400_BAD_REQUEST)
 
+
+class FilterView(APIView):
+    permission_classes = []
+
+    @swagger_auto_schema(
+        tags=['expected'],
+        operation_summary='Filter the expected calorie setting using user id',
+        operation_description='Filter user expected calories',
+    )
+    def get(self, request, id):
+        instance = ExpectedCalories.objects.filter(user_id=id).first()
+        if instance is not None:
+            return JsonResponse({
+                "status": "success",
+                "code": 200,
+                "data": {
+                    "user_id": instance.user_id.id,
+                    "expected": instance.expected
+                }
+            }, status=status.HTTP_200_OK)
+        return JsonResponse({
+            "status": "error",
+            "code": 404,
+            "errors": "Not Found"
+        }, status=status.HTTP_404_NOT_FOUND)
+
+
+class UpdateView(GenericAPIView):
+    serializer_class = ExpectedSerializer
+
     @swagger_auto_schema(
         tags=['expected'],
         operation_summary='Update a expected calories setting',
@@ -40,6 +70,7 @@ class CaloriesView(GenericAPIView):
         data = ExpectedCalories.objects.filter(user_id=request.data.get("user_id")).first()
         if data is not None:
             data.expected = request.data.get("expected")
+            data.updated_at = timezone.now()
             data.save()
             return JsonResponse({
                 "status": "success",
@@ -53,25 +84,23 @@ class CaloriesView(GenericAPIView):
         }, status=status.HTTP_400_BAD_REQUEST)
 
 
-class FilterView(GenericAPIView):
-    permission_classes = []
-
+class DeleteView(APIView):
     @swagger_auto_schema(
         tags=['expected'],
-        exclude_serializer=True,
-        operation_summary='Filter the expected calorie setting using user id',
-        operation_description='Filter user expected calories',
-        responses={200: openapi.Response(description='Successful response')}
+        operation_summary='Delete the expected calorie setting using user id',
+        operation_description='Delete user expected calories',
     )
-    def post(self, request, id):
+    def delete(self, request, id):
         instance = ExpectedCalories.objects.filter(user_id=id).first()
         if instance is not None:
+            temp = instance
+            instance.delete()
             return JsonResponse({
                 "status": "success",
                 "code": 200,
                 "data": {
-                    "user_id": instance.user_id.id,
-                    "expected": instance.expected
+                    "user_id": temp.user_id.id,
+                    "expected": temp.expected
                 }
             }, status=status.HTTP_200_OK)
         return JsonResponse({

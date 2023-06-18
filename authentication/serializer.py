@@ -2,6 +2,7 @@ from rest_framework.serializers import ModelSerializer, CharField, TimeField, Da
 from .models import DiveUser
 from rest_framework.validators import ValidationError
 from rest_framework.authtoken.models import Token
+from django.utils import timezone
 
 
 class RegisterSerializer(ModelSerializer):
@@ -24,6 +25,7 @@ class RegisterSerializer(ModelSerializer):
 
     def create(self, validated_data):
         password = validated_data.pop("password")
+        validated_data["registration_time"] = timezone.localtime(timezone="Asia/Kolkata").time()
         user = super().create(validated_data)
         user.set_password(password)
         user.save()
