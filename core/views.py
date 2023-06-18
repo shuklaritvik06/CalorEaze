@@ -42,7 +42,7 @@ class UpdateView(GenericAPIView):
     )
     def put(self, request, id):
         instance = CalorieModel.objects.filter(pk=id).first()
-        if instance is not None and instance.user_id != request.user.id:
+        if instance is not None and instance.user_id.id != request.user.id:
             return JsonResponse({
                 "error": "You can only access your data"
             }, status=status.HTTP_400_BAD_REQUEST)
@@ -77,7 +77,7 @@ class DeleteView(APIView):
     )
     def delete(self, request, id):
         instance = CalorieModel.objects.filter(pk=id).first()
-        if instance is not None and instance.user_id != request.user.id:
+        if instance is not None and instance.user_id.id != request.user.id:
             return JsonResponse({
                 "error": "You can only access your data"
             }, status=status.HTTP_400_BAD_REQUEST)
@@ -106,7 +106,7 @@ class FilterView(GenericAPIView):
     )
     def get(self, request, id):
         instance = CalorieModel.objects.filter(pk=id).first()
-        if instance is not None and instance.user_id != request.user.id:
+        if instance is not None and instance.user_id.id != request.user.id:
             return JsonResponse({
                 "error": "You can only access your data"
             }, status=status.HTTP_400_BAD_REQUEST)
@@ -119,10 +119,10 @@ class FilterView(GenericAPIView):
         data = self.serializer_class(instance).data
         return JsonResponse({
             "status": "success",
-            "code": 204,
+            "code": 200,
             "message": {
                 "user_id": data.get("user_id").id,
-                "text": data.get("text"),
+                "query": data.get("query"),
                 "time": data.get("time"),
                 "date": data.get("date"),
                 "total_calories": data.get("total_calories"),
@@ -145,12 +145,12 @@ class FilterByUserId(APIView):
                 "total_calories": i.total_calories,
                 "date": i.date,
                 "time": i.time,
-                "met_expectations": i.met_expectations,
                 "id": i.id
             })
         return JsonResponse({
             "status": "success",
             "code": 200,
-            "data": data
+            "data": data,
+            "met_expectations": entries[0].met_expectations or False
         }, status=status.HTTP_200_OK)
 
