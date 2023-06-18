@@ -9,7 +9,7 @@ I decided to use Django Rest Framework (DRF) for my project due to its numerous 
 - Serialization
 - Authentication and Permissions
 
-![Screenshot from 2023-06-18 21-51-13.png](..%2F..%2FPictures%2FScreenshots%2FScreenshot%20from%202023-06-18%2021-51-13.png)
+![Screenshot from 2023-06-18 21-51-13](https://github.com/DiveHQ-Octernships/dive-backend-engineering-octernship-shuklaritvik06/assets/72812470/433b117d-c4e3-4ca3-8396-b4d8ee5c22d5)
 
 
 ## Features
@@ -155,11 +155,10 @@ python3 manage.py createsuperuser --settings "api.settings.local"
 
 - Login to the Admin Portal
 
-![Screenshot from 2023-06-18 21-54-34.png](..%2F..%2FPictures%2FScreenshots%2FScreenshot%20from%202023-06-18%2021-54-34.png)
+![Screenshot from 2023-06-18 21-54-34](https://github.com/DiveHQ-Octernships/dive-backend-engineering-octernship-shuklaritvik06/assets/72812470/153df697-0839-4a48-83af-2f165fc5c8b3)
 
 
 You would see Social Applications on the left side CLICK on that and then ADD SOCIAL APPLICATION
-
 
 - Now Select the Google as provider and fill the client id and secret from the Google console
 
