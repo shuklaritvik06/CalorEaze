@@ -1,0 +1,4 @@
+venv/
+.env
+calories_api.sqlite3
+__pycache__/
