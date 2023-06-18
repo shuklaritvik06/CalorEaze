@@ -6,6 +6,7 @@ from django.http import JsonResponse
 from rest_framework import status
 from .models import CalorieModel
 from drf_yasg.utils import swagger_auto_schema
+from rest_framework.generics import ListAPIView
 
 
 class CreateView(GenericAPIView):
@@ -131,7 +132,10 @@ class FilterView(GenericAPIView):
         }, status=status.HTTP_200_OK)
 
 
-class FilterByUserId(APIView):
+class FilterByUserId(ListAPIView):
+    serializer_class = CalorieSerializer
+    queryset = CalorieModel.objects.all()
+
     @swagger_auto_schema(
         tags=['calories'],
         operation_summary='Filter user calories',
@@ -147,10 +151,6 @@ class FilterByUserId(APIView):
                 "time": i.time,
                 "id": i.id
             })
-        return JsonResponse({
-            "status": "success",
-            "code": 200,
-            "data": data,
-            "met_expectations": entries[0].met_expectations or False
-        }, status=status.HTTP_200_OK)
+        return JsonResponse({"data": data, "met_expectations": entries[0].met_expectations or False},
+                            status=status.HTTP_200_OK)
 
