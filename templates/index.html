@@ -1,13 +1,19 @@
 <!doctype html>
+{% load static %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Dive Backend Octernship Task | Calories API</title>
 </head>
 <body>
-
+<main>
+    <h1 class="text-5xl text-center mt-20 font-bold text-[#333]">Calories API</h1>
+    <img src="{% static 'images/logo.png' %}" alt="logo" class="w-32 h-32 mx-auto mt-10">
+    <p class="text-2xl text-center mt-20">Current Status is <span class="bg-green-500 p-3 ml-3 rounded-md">{{status}}</span></p>
+</main>
 </body>
 </html>

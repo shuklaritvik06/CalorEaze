@@ -2,7 +2,11 @@ from rest_framework.decorators import api_view
 from django.http import JsonResponse
 from django.utils import timezone
 from drf_yasg.utils import swagger_auto_schema
+from django.shortcuts import render
 
+
+def home_view(request):
+    return render(request, "index.html")
 
 @swagger_auto_schema(
     methods=['get'],
