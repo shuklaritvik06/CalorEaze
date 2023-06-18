@@ -27,7 +27,7 @@ class RegisterSerializer(ModelSerializer):
 
     def create(self, validated_data):
         password = validated_data.pop("password")
-        validated_data["registration_time"] = timezone.now()
+        validated_data["registration_time"] = timezone.now().time()
         user = super().create(validated_data)
         user.set_password(password)
         user.save()

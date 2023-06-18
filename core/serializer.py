@@ -14,7 +14,7 @@ class CalorieSerializer(ModelSerializer):
 
     class Meta:
         model = CalorieModel
-        fields = ["user_id", "time", "date", "met_expectations", "total_calories", "text"]
+        fields = ["user_id", "time", "date", "met_expectations", "total_calories", "query"]
 
     def create(self, validated_data):
         request = self.context.get('request')
@@ -31,7 +31,7 @@ class CalorieSerializer(ModelSerializer):
             total = 0
             sum_calories = 0.0
             response = requests.post(project_config.API_URL,
-                                     json={"query": f'{validated_data["text"]}',
+                                     json={"query": f'{validated_data["query"]}',
                                            "timezone": "Asia/Kolkata"},
                                      headers={"Content-Type": "application/json",
                                               "x-app-id": project_config.APP_ID, "x-app-key": project_config.API_KEY})

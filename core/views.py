@@ -129,3 +129,28 @@ class FilterView(GenericAPIView):
                 "met_expectations": data.get("met_expectations")
             }
         }, status=status.HTTP_200_OK)
+
+
+class FilterByUserId(APIView):
+    @swagger_auto_schema(
+        tags=['calories'],
+        operation_summary='Filter user calories',
+    )
+    def get(self, request):
+        entries = CalorieModel.objects.filter(user_id=request.user.id)
+        data = []
+        for i in entries:
+            data.append({
+                "query": i.query,
+                "total_calories": i.total_calories,
+                "date": i.date,
+                "time": i.time,
+                "met_expectations": i.met_expectations,
+                "id": i.id
+            })
+        return JsonResponse({
+            "status": "success",
+            "code": 200,
+            "data": data
+        }, status=status.HTTP_200_OK)
+
