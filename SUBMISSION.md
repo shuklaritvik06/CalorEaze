@@ -9,7 +9,7 @@ I decided to use Django Rest Framework (DRF) for my project due to its numerous 
 - Serialization
 - Authentication and Permissions
 
-![Screenshot from 2023-06-18 21-51-13](https://github.com/DiveHQ-Octernships/dive-backend-engineering-octernship-shuklaritvik06/assets/72812470/433b117d-c4e3-4ca3-8396-b4d8ee5c22d5)
+![Screenshot from 2023-06-19 01-15-19](https://github.com/DiveHQ-Octernships/dive-backend-engineering-octernship-shuklaritvik06/assets/72812470/c1fcabe9-77f0-488f-9eaa-77d143215327)
 
 
 ## Features
@@ -27,7 +27,7 @@ I decided to use Django Rest Framework (DRF) for my project due to its numerous 
 **Status**
 
 ```markdown
-/
+/status/
 ```
 
 *Response*
