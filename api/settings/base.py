@@ -23,15 +23,36 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'drf_yasg',
     'rest_framework',
     'rest_framework.authtoken',
-    'drf_yasg',
+    "allauth",
+    "allauth.account",
+    "allauth.socialaccount",
+    "allauth.socialaccount.providers.google",
+    'docs.apps.DocsConfig',
     'authentication.apps.AuthConfig',
     'core.apps.CoreConfig',
-    'docs.apps.DocsConfig',
     'extras.apps.ExtrasConfig',
     'management.apps.ManagementConfig'
 ]
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend'
+]
+
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'SCOPE': [
+            'profile',
+            'email',
+        ],
+        'AUTH_PARAMS': {
+            'access_type': 'online',
+        }
+    }
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -89,6 +110,9 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'api.wsgi.application'
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
 
 AUTH_PASSWORD_VALIDATORS = [
     {

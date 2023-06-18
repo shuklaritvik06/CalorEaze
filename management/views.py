@@ -5,10 +5,12 @@ from authentication.serializer import RegisterSerializer
 from django.http import JsonResponse
 from rest_framework import status
 from .serializer import ResponseSerializer
+from .permissions import ManagementPerms
 
 
 class CreateView(GenericAPIView):
     serializer_class = RegisterSerializer
+    permission_classes = [ManagementPerms]
 
     @swagger_auto_schema(
         tags=['users'],
@@ -34,6 +36,7 @@ class CreateView(GenericAPIView):
 
 class UpdateView(GenericAPIView):
     serializer_class = RegisterSerializer
+    permission_classes = [ManagementPerms]
 
     @swagger_auto_schema(
         tags=['users'],
@@ -67,6 +70,7 @@ class UpdateView(GenericAPIView):
 
 class FilterView(GenericAPIView):
     serializer_class = ResponseSerializer
+    permission_classes = [ManagementPerms]
 
     @swagger_auto_schema(
         tags=['users'],
@@ -90,6 +94,7 @@ class FilterView(GenericAPIView):
 
 class DeleteView(GenericAPIView):
     serializer_class = ResponseSerializer
+    permission_classes = [ManagementPerms]
 
     @swagger_auto_schema(
         tags=['users'],

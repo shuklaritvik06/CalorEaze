@@ -21,6 +21,7 @@ class DiveUserManager(BaseUserManager):
     def create_superuser(self, email, password, **kwargs):
         kwargs.setdefault("is_staff", True)
         kwargs.setdefault("is_superuser", True)
+        kwargs.setdefault("role", "ADMIN")
         return self.create_user(email=email, password=password, **kwargs)
 
 
@@ -30,7 +31,7 @@ class DiveUser(AbstractUser):
     role = models.CharField(max_length=100, choices=(('REGULAR', 'REGULAR'),
                                                      ('MANAGER', 'MANAGER'), ('ADMIN', 'ADMIN')), default="REGULAR")
     registration_date = models.DateField(auto_now=True)
-    registration_time = models.TimeField(blank=True)
+    registration_time = models.TimeField(null=True)
 
     objects = DiveUserManager()
 

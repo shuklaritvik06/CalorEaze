@@ -9,8 +9,10 @@ class RegisterSerializer(ModelSerializer):
     email = CharField(max_length=100)
     username = CharField(max_length=45)
     password = CharField(min_length=8, write_only=True)
-    registration_time = TimeField(read_only=True)
-    role = CharField(read_only=True)
+    registration_time = TimeField(required=False, read_only=True)
+    role = CharField(required=False, read_only=True)
+    first_name = CharField(required=False)
+    last_name = CharField(required=False)
 
     class Meta:
         model = DiveUser
@@ -25,7 +27,7 @@ class RegisterSerializer(ModelSerializer):
 
     def create(self, validated_data):
         password = validated_data.pop("password")
-        validated_data["registration_time"] = timezone.localtime(timezone="Asia/Kolkata").time()
+        validated_data["registration_time"] = timezone.now()
         user = super().create(validated_data)
         user.set_password(password)
         user.save()

@@ -18,3 +18,5 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 API_KEY = os.environ.get("API_KEY")
 SECRET_KEY = os.environ.get("SECRET_KEY")
+API_URL = os.environ.get("API_URL")
+APP_ID = os.environ.get("APP_ID")
