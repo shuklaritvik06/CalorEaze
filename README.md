@@ -2,13 +2,6 @@
 
 The Calories API is a RESTful API that provides information about the calorie content of various food items you have consumed in the day.
 
-I decided to use Django Rest Framework (DRF) for my project due to its numerous benefits and features that align perfectly with my requirements for building a robust and scalable API.
-
-- Rapid Development
-- Flexibility
-- Serialization
-- Authentication and Permissions
-
 ### Features (Tasks)
 - API Users must be able to create an account and log in.
 - All API calls must be authenticated.
