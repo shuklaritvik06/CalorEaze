@@ -1,48 +1,187 @@
-[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-24ddc0f5d75046c5622901739e7c5dd533143b0c8e959d652212380cedb1ea36.svg)](https://classroom.github.com/a/085htE_I)
-## ![Dive logo](https://user-images.githubusercontent.com/424487/219708981-f0416526-ba48-4b01-b5b3-c0eb73362718.png) Dive 
-<!-- ![Company Logo](https://example.org) -->
+# Calories Tracker API
 
-| Octernship info  | Timelines and Stipend |
-| ------------- | ------------- |
-| Assignment Deadline  | 19th June 2023  |
-| Octernship Duration  | 3rd July 2023 - 3rd October 2023 |
-| Monthly Stipend  | $500 USD  |
+The Calories API is a RESTful API that provides information about the calorie content of various food items you have consumed in the day.
 
-## Assignment
+I decided to use Django Rest Framework (DRF) for my project due to its numerous benefits and features that align perfectly with my requirements for building a robust and scalable API.
 
+- Rapid Development
+- Flexibility
+- Serialization
+- Authentication and Permissions
 
-# Write a REST API for the input of calories in Python
-
-### Task Instructions
+### Features (Tasks)
 - API Users must be able to create an account and log in.
 - All API calls must be authenticated.
+- Google OAuth
+- Swagger UI
 - Implement at least three roles with different permission levels: a regular user would only be able to CRUD on their owned records, a user manager would be able to CRUD only users, and an admin would be able to CRUD all records and users.
 - Each entry has a date, time, text, and number of calories.
 - If the number of calories is not provided, the API should connect to a Calories API provider (for example, https://www.nutritionix.com) and try to get the number of calories for the entered meal.
 - User setting – Expected number of calories per day.
 - Each entry should have an extra boolean field set to true if the total for that day is less than the expected number of calories per day, otherwise should be false.
-- The API must be able to return data in the JSON format.
-- The API should provide filter capabilities for all endpoints that return a list of elements, as well should be able to support pagination.
-- Write unit and e2e tests.
-- Use any *Python* web framework
+- The API  able to return data in the JSON format.
+- The API  provide filter capabilities for all endpoints that return a list of elements, as well should be able to support pagination.
+- Unit and e2e tests.
+- Use *Python* web framework
 - Use *SQLite* as the database
 
-### Task Expectations
-- API Design Best Practices
-- Documentation of any assumptions or choices made and why
-- Links as citation to any article / code referred to or used
-- Unit tests covering the core calories logic
-- Appropriate exception handling and error messages
-- Code Quality - remove any unnecessary code, avoid large functions
-- Good commit history - we won’t accept a repo with a single giant commit 🙅‍♀️
+### Some Endpoints
 
-### Task submission
-Using the [GitHub Flow](https://docs.github.com/en/get-started/quickstart/github-flow#following-github-flow) for assignment submission
-1. Creating a new branch 
-2. Raising a Pull Request for submission
-3. Using GitHub Discussions to ask any relevant questions regarding the project
-4. Final submission Checklist:
-- [x] SUBMISSION.md in the repository / PR, with:
-  - [x] commands to set up the repo (dependencies etc.)
-  - [x] commands to run the test suite
-  - [x] commands to run the API server
+**Status**
+
+```markdown
+/status/
+```
+
+*Response*
+
+```json
+{
+  "status": "success",
+  "code": 200,
+  "message": "Calorie API is running smoothly",
+  "data": {
+    "version": "1.0.0",
+    "timestamp": "2023-06-18T16:06:03.388Z"
+  }
+}
+```
+
+**Authentication** (No Permission Classes)
+
+*Register*
+
+- /api/v1/auth/signup/
+
+*Response*
+
+```json
+{
+  "status": "success",
+  "code": 201,
+  "message": "User registered successfully",
+  "data": {
+    "username": "rakesh",
+    "email": "rakesh@rakesh.com",
+    "registration_date": "2023-06-18",
+    "registration_time": "16:08:43.678004",
+    "first_name": "Rakesh",
+    "last_name": "Nagar",
+    "role": "REGULAR"
+  }
+}
+```
+
+*Login*
+
+- /api/v1/auth/login/
+
+*Response*
+
+```json
+{
+  "status": "success",
+  "message": "Login successful",
+  "data": {
+    "user": {
+      "email": "rakesh@rakesh.com",
+      "first_name": "Rakesh",
+      "last_name": "Nagar",
+      "role": "REGULAR",
+      "registration_date": "2023-06-18",
+      "registration_time": "16:08:43.678004"
+    },
+    "auth_token": {
+      "access": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjg3MTA4MTUyLCJpYXQiOjE2ODcxMDQ1NTIsImp0aSI6IjBkYzE1YmQwZDgzMzQzNmM4MmE1OWY1ZWU3MjRlMDUwIiwidXNlcl9pZCI6MTIsImVtYWlsIjoicmFrZXNoQHJha2VzaC5jb20iLCJyb2xlIjoiUkVHVUxBUiIsImlzcyI6IkRpdmVIUSJ9.hb8SdWEsFaAcUCsr7qkYRrFUummRtIF-JgcletlddX4",
+      "refresh": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTY4NzE5MDk1MiwiaWF0IjoxNjg3MTA0NTUyLCJqdGkiOiI5MDY3ZDg3NDI2NGM0Yzc4ODJmNWJjYTU4N2Y0N2ZiYyIsInVzZXJfaWQiOjEyLCJlbWFpbCI6InJha2VzaEByYWtlc2guY29tIiwicm9sZSI6IlJFR1VMQVIiLCJpc3MiOiJEaXZlSFEifQ.Yvo0bkY2yddmlg-ZJyGa2AxrFWs6hbAY2ErVmKoWo_w"
+    }
+  }
+}
+```
+
+> Setup Locally to use Swagger UI and interact with the api easily
+
+### How to set up locally?
+
+- Clone the repo
+
+```
+git clone https://github.com/DiveHQ-Octernships/dive-backend-engineering-octernship-shuklaritvik06.git
+```
+
+- Change the working directory
+
+```
+cd dive-backend-engineering-octernship-shuklaritvik06
+```
+
+- Set up .env file
+
+```
+Make a new file with the help of .env.example file
+
+Define all the environment variables in that file. Navigate to https://www.nutritionix.com to get the APP Key and APP Id
+```
+
+- Install the dependencies
+
+```
+pip install -r requirements.txt
+```
+
+- Migrate the models to the db
+
+```
+python3 manage.py makemigrations --settings "api.settings.local"
+python3 manage.py migrate --settings "api.settings.local"
+```
+
+- Run the server
+
+There are 2 different settings for production and development, we will use the dev one
+
+```
+python3 manage.py runserver --settings "api.settings.local"
+```
+
+Hurray! Your API Server has been successfully started!
+
+Now go to http://localhost:8000/docs/swagger and Authenticate yourself using the Google OAuth or username & password
+
+**Setup Google Auth**
+
+- Create a Super User
+
+```
+python3 manage.py createsuperuser --settings "api.settings.local"
+```
+
+- Login to the Admin Portal
+
+
+You would see Social Applications on the left side CLICK on that and then ADD SOCIAL APPLICATION
+
+- Now Select the Google as provider and fill the client id and secret from the Google console
+
+Google OAuth Setup Completed Successfully!
+
+
+**Testing**
+
+Run Tests
+
+```markdown
+python3 manage.py test --settings "api.settings.local"
+```
+
+**Docker Image**
+
+- Pull the image from docker hub
+
+```commandline
+docker push ritvikshukla/caloriesapi:latest
+```
+
+```commandline
+docker run -p 8000:8000 -d ritvikshukla/caloriesapi
+```
