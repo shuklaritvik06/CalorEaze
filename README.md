@@ -1,5 +1,7 @@
 # Calories Tracker API
 
+![calories](https://github.com/shuklaritvik06/calories_tracker/assets/72812470/3a7492a5-5061-46cb-a321-00b03e8429ec)
+
 The Calories API is a RESTful API that provides information about the calorie content of various food items you have consumed in the day.
 
 ### Features (Tasks)
