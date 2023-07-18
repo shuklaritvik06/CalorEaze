@@ -4,7 +4,8 @@
 
 The Calories API is a RESTful API that provides information about the calorie content of various food items you have consumed in the day.
 
-### Features (Tasks)
+## Features (Tasks)
+
 - API Users must be able to create an account and log in.
 - All API calls must be authenticated.
 - Google OAuth

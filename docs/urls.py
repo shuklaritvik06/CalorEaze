@@ -5,23 +5,27 @@ from drf_yasg import openapi
 
 
 schema_view = get_schema_view(
-   openapi.Info(
-      title="Calories API",
-      default_version='v1',
-      description="""
+    openapi.Info(
+        title="Calories API",
+        default_version="v1",
+        description="""
         The Calories API is a web service that provides functionality to manage and track calories consumed by users. 
         It allows users to retrieve information about their consumed calories, add new calorie entries, update existing 
         entries, and delete entries as needed.
       """,
-      terms_of_service="https://github.com/DiveHQ-Octernships/dive-backend-engineering-octernship-shuklaritvik06/blob"
-                       "/dev/LICENSE",
-      contact=openapi.Contact(email="ritvikshukla261@gmail.com"),
-      license=openapi.License(name="MIT License"),
-   ),
-   public=True,
-   permission_classes=[permissions.AllowAny]
+        terms_of_service="https://github.com/DiveHQ-Octernships/dive-backend-engineering-octernship-shuklaritvik06/blob"
+        "/dev/LICENSE",
+        contact=openapi.Contact(email="ritvikshukla261@gmail.com"),
+        license=openapi.License(name="MIT License"),
+    ),
+    public=True,
+    permission_classes=[permissions.AllowAny],
 )
 
 urlpatterns = [
-   re_path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
+    re_path(
+        "swagger/",
+        schema_view.with_ui("swagger", cache_timeout=0),
+        name="schema-swagger-ui",
+    ),
 ]
