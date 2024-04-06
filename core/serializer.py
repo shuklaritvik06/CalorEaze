@@ -39,7 +39,8 @@ class CalorieSerializer(ModelSerializer):
                     "x-app-key": project_config.API_KEY,
                 },
             )
-            for i in response.json()["foods"]:
+            response_data = response.json()
+            for i in response_data.get("foods", []):
                 total += i["nf_calories"]
             copy_dict["total_calories"] = total
         entries = CalorieModel.objects.filter(user_id=request.user.id)
